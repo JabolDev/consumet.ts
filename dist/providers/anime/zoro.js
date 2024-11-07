@@ -26,7 +26,7 @@ class Zoro extends models_1.AnimeParser {
                 info.malID = Number(mal_id);
                 info.alID = Number(anilist_id);
                 info.title = $('h2.film-name > a.text-white').text();
-                info.japaneseTitle = $('div.anisc-info div:nth-child(2) span.name').text();
+
                 info.image = $('img.film-poster-img').attr('src');
                 info.description = $('div.film-description').text().trim();
                 // Movie, TV, OVA, ONA, Special, Music
@@ -89,6 +89,26 @@ class Zoro extends models_1.AnimeParser {
                         url: url,
                     });
                 });
+
+
+                // extract data from series page
+                const Series = await this.client.get(`${this.baseUrl}/${id}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        Referer: `${this.baseUrl}/watch/${id}`,
+                    },
+                });
+                const $$$ = (0, cheerio_1.load)(Series.data);
+                info.japaneseTitle = $$$('div.anisc-info div:nth-child(2) span.name').html();
+                info.otherName = $$$('div.anisc-info div:nth-child(2) span.name').html();
+                info.status = $$$('div.anisc-info div:nth-child(7) span.name').text();
+                info.duration = $$$('div.anisc-info div:nth-child(6) span.name').text();
+                info.releaseDate = $$$('div.anisc-info div:nth-child(5) span.name').text().replace(/\D/g, '');
+                const genreDiv = $$$('div.anisc-info div:nth-child(9)');
+                const genres = genreDiv.find('a').map((index, element) => {
+                    return $(element).text();
+                }).get();
+                info.genres = genres;
                 return info;
             }
             catch (err) {
