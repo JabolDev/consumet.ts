@@ -109,6 +109,28 @@ class Zoro extends models_1.AnimeParser {
                     return $(element).text();
                 }).get();
                 info.genres = genres;
+
+                const actors = [];
+                $$$('.bac-list-wrap .bac-item').each((index, element) => {
+                    const actor = {};
+                    const perInfoLtr = $(element).find('.per-info.ltr');
+                    const characterImage = perInfoLtr.find('img').attr('data-src');
+                    actor.characterImage = characterImage;
+                    const characterName = perInfoLtr.find('.pi-detail h4').text().trim();
+                    actor.characterName = characterName;
+                    const characterRole = perInfoLtr.find('.pi-detail span').text().trim();
+                    actor.characterRole = characterRole;
+                    const perInfoRtl = $(element).find('.per-info.rtl');
+                    const actorImage = perInfoRtl.find('img').attr('data-src');
+                    actor.actorImage = actorImage;
+                    const actorName = perInfoRtl.find('.pi-detail h4').text().trim();
+                    actor.actorName = actorName;
+                    const country = perInfoRtl.find('.pi-detail span').text().trim();
+                    actor.country = country;
+                    actors.push(actor);
+                });
+
+                info.actors = actors
                 return info;
             }
             catch (err) {
