@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crypto_1 = __importDefault(require("crypto"));
 const models_1 = require("../models");
 const megacloud = {
-    script: 'https://megacloud.tv/js/player/a/prod/e1-player.min.js?v=',
-    sources: 'https://megacloud.tv/embed-2/ajax/e-1/getSources?id=',
+    script: 'https://twilight-frog-5057.jabolaso1.workers.dev/?proxy=https://megacloud.tv/js/player/a/prod/e1-player.min.js?v=',
+    sources: 'https://twilight-frog-5057.jabolaso1.workers.dev/?proxy=https://megacloud.tv/embed-2/ajax/e-1/getSources?id=',
 };
 class MegaCloud extends models_1.VideoExtractor {
     constructor() {
